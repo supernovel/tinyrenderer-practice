@@ -1,8 +1,11 @@
 {
   "name": "tinyrenderer",
   "packageManager": "yarn@4.1.1",
+  "type": "module",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "postinstall": "husky"
   },
   "lint-staged": {
@@ -20,7 +23,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "3.2.5",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6"
   }
 }
