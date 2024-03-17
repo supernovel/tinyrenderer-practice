@@ -113,7 +113,7 @@ export class Bitmap {
         const pixel = this.data[position];
 
         buffer.set(
-          Uint8Array.of(pixel?.r ?? 0, pixel?.g ?? 0, pixel?.b ?? 0),
+          Uint8Array.of(pixel?.b ?? 0, pixel?.g ?? 0, pixel?.r ?? 0),
           bufferPosition,
         );
         bufferPosition += 3;
