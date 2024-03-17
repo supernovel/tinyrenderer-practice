@@ -107,7 +107,7 @@ export class Bitmap {
     bufferPosition += 4;
 
     // image data
-    for (let y = this.height - 1; y >= 0; y--) {
+    for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const position = y * this.width + x;
         const pixel = this.data[position];
