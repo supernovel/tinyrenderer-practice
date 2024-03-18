@@ -32,7 +32,7 @@ export function line(
 
   const dx = x1 - x0;
   const dy = y1 - y0;
-  const derror = Math.abs(dy / dx);
+  const derror = Math.abs(dy) * 2;
   let error = 0;
   let y = y0;
 
@@ -44,9 +44,9 @@ export function line(
     }
 
     error += derror;
-    if (error > 0.5) {
+    if (error > dx) {
       y += y1 > y0 ? 1 : -1;
-      error -= 1;
+      error -= dx * 2;
     }
   }
 }
