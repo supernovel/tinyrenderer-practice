@@ -1,19 +1,34 @@
 import { render } from "lit";
 import { Bitmap, BitmapColor } from "./bitmap";
+import { WavefrontModel } from "./model";
+import africanHeadObject from "./obj/african_head.obj?raw";
 import "./render-target";
 import { line } from "./renderer";
 
 const renderTarget = document.createElement("render-target");
 
 const white = new BitmapColor(255, 255, 255);
-const red = new BitmapColor(255, 0, 0);
 
 renderTarget.buildImage = () => {
-  const image = new Bitmap(100, 100);
+  const width = 800;
+  const height = 800;
+  const image = new Bitmap(width, height);
+  const model = new WavefrontModel(africanHeadObject);
 
-  line(13, 20, 80, 40, image, white);
-  line(20, 13, 40, 80, image, red);
-  line(80, 40, 13, 20, image, red);
+  for (let i = 0; i < model.faces.length; i++) {
+    const face = model.faces[i];
+
+    for (let j = 0; j < 3; j++) {
+      const v0 = model.verts[face[j]];
+      const v1 = model.verts[face[(j + 1) % 3]];
+      const x0 = ((v0.x + 1) * width) / 2;
+      const y0 = ((v0.y + 1) * height) / 2;
+      const x1 = ((v1.x + 1) * width) / 2;
+      const y1 = ((v1.y + 1) * height) / 2;
+
+      line(x0, y0, x1, y1, image, white);
+    }
+  }
 
   return new Blob([image.writeData()], { type: "image/bmp" });
 };
