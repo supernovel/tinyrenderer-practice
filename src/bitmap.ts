@@ -51,59 +51,59 @@ export class Bitmap {
     bufferPosition += 2;
 
     // file size
-    buffer.set(Uint32Array.of(fileSize), bufferPosition);
+    buffer.set(uint8ArrayToUint32(fileSize), bufferPosition);
     bufferPosition += 4;
 
     // reserved
-    buffer.set(Uint32Array.of(0), bufferPosition);
+    buffer.set(uint8ArrayToUint32(0), bufferPosition);
     bufferPosition += 4;
 
     // file data offset
-    buffer.set(Uint32Array.of(dataOffset), bufferPosition);
+    buffer.set(uint8ArrayToUint32(dataOffset), bufferPosition);
     bufferPosition += 4;
 
     // DIB header size
-    buffer.set(Uint32Array.of(dibHeaderSize), bufferPosition);
+    buffer.set(uint8ArrayToUint32(dibHeaderSize), bufferPosition);
     bufferPosition += 4;
 
     // image width
-    buffer.set(Uint32Array.of(this.width), bufferPosition);
+    buffer.set(uint8ArrayToUint32(this.width), bufferPosition);
     bufferPosition += 4;
 
     // image height
-    buffer.set(Uint32Array.of(this.height), bufferPosition);
+    buffer.set(uint8ArrayToUint32(this.height), bufferPosition);
     bufferPosition += 4;
 
     // color planes
-    buffer.set(Uint16Array.of(1), bufferPosition);
+    buffer.set(uint8ArrayToUint16(1), bufferPosition);
     bufferPosition += 2;
 
     // bit per pixel
-    buffer.set(Uint16Array.of(bitPerPixel), bufferPosition);
+    buffer.set(uint8ArrayToUint16(bitPerPixel), bufferPosition);
     bufferPosition += 2;
 
     // compression
-    buffer.set(Uint32Array.of(0), bufferPosition);
+    buffer.set(uint8ArrayToUint32(0), bufferPosition);
     bufferPosition += 4;
 
     // image size
-    buffer.set(Uint32Array.of(dataSize), bufferPosition);
+    buffer.set(uint8ArrayToUint32(dataSize), bufferPosition);
     bufferPosition += 4;
 
     // horizontal resolution
-    buffer.set(Uint32Array.of(0), bufferPosition);
+    buffer.set(uint8ArrayToUint32(0), bufferPosition);
     bufferPosition += 4;
 
     // vertical resolution
-    buffer.set(Uint32Array.of(0), bufferPosition);
+    buffer.set(uint8ArrayToUint32(0), bufferPosition);
     bufferPosition += 4;
 
     // colors in color palette
-    buffer.set(Uint32Array.of(0), bufferPosition);
+    buffer.set(uint8ArrayToUint32(0), bufferPosition);
     bufferPosition += 4;
 
     // important colors
-    buffer.set(Uint32Array.of(0), bufferPosition);
+    buffer.set(uint8ArrayToUint32(0), bufferPosition);
     bufferPosition += 4;
 
     // image data
@@ -130,3 +130,11 @@ export class Bitmap {
     return buffer;
   }
 }
+
+const uint8ArrayToUint32 = (value: number) => {
+  return new Uint8Array(Uint32Array.of(value).buffer);
+};
+
+const uint8ArrayToUint16 = (value: number) => {
+  return new Uint8Array(Uint16Array.of(value).buffer);
+};
