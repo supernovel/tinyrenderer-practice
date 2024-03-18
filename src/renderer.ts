@@ -30,15 +30,23 @@ export function line(
     y0 = temp[3];
   }
 
-  for (let x = x0; x < x1; x++) {
-    const t = (x - x0) / (x1 - x0);
-    const y = y0 + (y1 - y0) * t;
+  const dx = x1 - x0;
+  const dy = y1 - y0;
+  const derror = Math.abs(dy / dx);
+  let error = 0;
+  let y = y0;
 
+  for (let x = x0; x < x1; x++) {
     if (steep) {
       image.set(y, x, color);
-      continue;
+    } else {
+      image.set(x, y, color);
     }
 
-    image.set(x, y, color);
+    error += derror;
+    if (error > 0.5) {
+      y += y1 > y0 ? 1 : -1;
+      error -= 1;
+    }
   }
 }
