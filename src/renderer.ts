@@ -46,3 +46,15 @@ export function line(p0: Vec2, p1: Vec2, image: Bitmap, color: BitmapColor) {
     }
   }
 }
+
+export function triangle(
+  t0: Vec2,
+  t1: Vec2,
+  t2: Vec2,
+  image: Bitmap,
+  color: BitmapColor,
+) {
+  line(t0, t1, image, color);
+  line(t1, t2, image, color);
+  line(t2, t0, image, color);
+}
