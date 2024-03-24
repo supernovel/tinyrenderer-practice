@@ -3,7 +3,7 @@ import { Bitmap, BitmapColor } from "./bitmap";
 import { WavefrontModel } from "./model";
 import africanHeadObject from "./obj/african_head.obj?raw";
 import "./render-target";
-import { line } from "./renderer";
+import { Vec2, line } from "./renderer";
 
 const renderTarget = document.createElement("render-target");
 
@@ -26,7 +26,7 @@ renderTarget.buildImage = () => {
       const x1 = ((v1.x + 1) * width) / 2;
       const y1 = ((v1.y + 1) * height) / 2;
 
-      line(x0, y0, x1, y1, image, white);
+      line(new Vec2(x0, y0), new Vec2(x1, y1), image, white);
     }
   }
 
