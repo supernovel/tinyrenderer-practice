@@ -54,7 +54,35 @@ export function triangle(
   image: Bitmap,
   color: BitmapColor,
 ) {
-  line(t0, t1, image, color);
-  line(t1, t2, image, color);
-  line(t2, t0, image, color);
+  [t0, t1, t2] = [t0, t1, t2].sort((a, b) => a.y - b.y);
+
+  const totalHeight = t2.y - t0.y;
+
+  for (let y = t0.y; y <= t1.y; y++) {
+    const segmentHeight = t1.y - t0.y + 1;
+    const totalGradient = totalHeight != 0 ? (y - t0.y) / totalHeight : 0;
+    const segmentGradient = segmentHeight != 0 ? (y - t0.y) / segmentHeight : 0;
+    let x0 = t0.x + (t2.x - t0.x) * totalGradient;
+    let x1 = t0.x + (t1.x - t0.x) * segmentGradient;
+
+    [x0, x1] = [x0, x1].sort((a, b) => a - b);
+
+    for (let x = x0; x <= x1; x++) {
+      image.set(x, y, color);
+    }
+  }
+
+  for (let y = t1.y; y <= t2.y; y++) {
+    const segmentHeight = t2.y - t1.y + 1;
+    const totalGradient = totalHeight != 0 ? (y - t0.y) / totalHeight : 0;
+    const segmentGradient = segmentHeight != 0 ? (y - t1.y) / segmentHeight : 0;
+    let x0 = t0.x + (t2.x - t0.x) * totalGradient;
+    let x1 = t1.x + (t2.x - t1.x) * segmentGradient;
+
+    [x0, x1] = [x0, x1].sort((a, b) => a - b);
+
+    for (let x = x0; x <= x1; x++) {
+      image.set(x, y, color);
+    }
+  }
 }
