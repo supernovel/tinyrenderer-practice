@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { render } from "lit";
 import { Bitmap, BitmapColor } from "./bitmap";
 import { WavefrontModel } from "./model";
@@ -20,17 +21,27 @@ const drawModel = () => {
 
   for (let i = 0; i < model.faces.length; i++) {
     const face = model.faces[i];
+    const v = [];
 
     for (let j = 0; j < 3; j++) {
       const v0 = model.verts[face[j]];
-      const v1 = model.verts[face[(j + 1) % 3]];
       const x0 = ((v0.x + 1) * width) / 2;
       const y0 = ((v0.y + 1) * height) / 2;
-      const x1 = ((v1.x + 1) * width) / 2;
-      const y1 = ((v1.y + 1) * height) / 2;
 
-      line(new Vec2(x0, y0), new Vec2(x1, y1), image, white);
+      v.push(new Vec2(x0, y0));
     }
+
+    triangle(
+      v[0],
+      v[1],
+      v[2],
+      image,
+      new BitmapColor(
+        Math.random() * 255,
+        Math.random() * 255,
+        Math.random() * 255,
+      ),
+    );
   }
 
   return new Blob([image.writeData()], { type: "image/bmp" });
@@ -57,7 +68,7 @@ const drawTriangle = () => {
 };
 
 renderTarget.buildImage = () => {
-  return drawTriangle();
+  return drawModel();
 };
 
 render(renderTarget, document.querySelector("#app") as HTMLElement);
