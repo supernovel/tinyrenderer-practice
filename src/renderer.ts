@@ -58,26 +58,21 @@ export function triangle(
 
   const totalHeight = t2.y - t0.y;
 
-  for (let y = t0.y; y <= t1.y; y++) {
-    const segmentHeight = t1.y - t0.y + 1;
+  for (let y = t0.y; y <= t2.y; y++) {
     const totalGradient = totalHeight != 0 ? (y - t0.y) / totalHeight : 0;
-    const segmentGradient = segmentHeight != 0 ? (y - t0.y) / segmentHeight : 0;
+    const isSecondSegment = t1.y < y;
+
+    const calculateX1 = (p0: Vec2, p1: Vec2) => {
+      const segmentHeight = p1.y - p0.y + 1;
+      const segmentHeightDiff = y - p0.y;
+      const segmentGradient =
+        segmentHeight != 0 ? segmentHeightDiff / segmentHeight : 0;
+
+      return p0.x + (p1.x - p0.x) * segmentGradient;
+    };
+
     let x0 = t0.x + (t2.x - t0.x) * totalGradient;
-    let x1 = t0.x + (t1.x - t0.x) * segmentGradient;
-
-    [x0, x1] = [x0, x1].sort((a, b) => a - b);
-
-    for (let x = x0; x <= x1; x++) {
-      image.set(x, y, color);
-    }
-  }
-
-  for (let y = t1.y; y <= t2.y; y++) {
-    const segmentHeight = t2.y - t1.y + 1;
-    const totalGradient = totalHeight != 0 ? (y - t0.y) / totalHeight : 0;
-    const segmentGradient = segmentHeight != 0 ? (y - t1.y) / segmentHeight : 0;
-    let x0 = t0.x + (t2.x - t0.x) * totalGradient;
-    let x1 = t1.x + (t2.x - t1.x) * segmentGradient;
+    let x1 = isSecondSegment ? calculateX1(t1, t2) : calculateX1(t0, t1);
 
     [x0, x1] = [x0, x1].sort((a, b) => a - b);
 
