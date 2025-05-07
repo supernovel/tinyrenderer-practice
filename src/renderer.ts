@@ -1,14 +1,5 @@
 import { Bitmap, BitmapColor } from "./bitmap";
-
-export class Vec2 {
-  x: number;
-  y: number;
-
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-}
+import { Vec2 } from "./types";
 
 export function line(p0: Vec2, p1: Vec2, image: Bitmap, color: BitmapColor) {
   let steep = false;

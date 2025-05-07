@@ -1,17 +1,7 @@
-class Vertex {
-  x: number;
-  y: number;
-  z: number;
-
-  constructor(x: number, y: number, z: number) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
-}
+import { Vec3 } from "./types";
 
 export class WavefrontModel {
-  verts: Array<Vertex> = [];
+  verts: Array<Vec3> = [];
   faces: Array<Array<number>> = [];
   data: string;
 
@@ -31,7 +21,7 @@ export class WavefrontModel {
         const items = line.slice(2).split(/\s+/);
         const vertex = items.map((item) => parseFloat(item));
 
-        this.verts.push(new Vertex(vertex[0], vertex[1], vertex[2]));
+        this.verts.push(new Vec3(vertex[0], vertex[1], vertex[2]));
       } else if (line.startsWith("f ")) {
         const items = line.slice(2).split(/\s+/);
 
